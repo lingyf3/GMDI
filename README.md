@@ -26,7 +26,7 @@ We have placed all data in ` "data"` folder.
   python main.py -c config_Circle
   ```
 
-*  Pretrained model is available [here](https://drive.google.com/file/d/1Xo8KapA_ZaUDrLdo8x3RsOWtM6Nl5PTT/view?usp=drive_link). Download  the weight and unzip the files. Place the weight in ` "pretrained_weight"` folder. Run the following code to inference. Taking the Circle dataset as an example:
+*  Pretrained model is available [here](https://drive.google.com/file/d/1pZbSBDnMuH6AWxz9vKmDGv_IJ9N2TXqU/view?usp=drive_link). Download  the weight and unzip the files. Place the weight in ` "pretrained_weight"` folder. Run the following code to inference. Taking the Circle dataset as an example:
 
   ```bash
   python inference.py -c config_Circle_inference
