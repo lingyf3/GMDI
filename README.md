@@ -8,7 +8,7 @@ We implement our model based on the code of [VDI](https://github.com/Wang-ML-Lab
 
 ```bash
 conda create -n GMDI python=3.8
-conda activate GMDI
+conda activate GMDI  
 conda install pytorch==1.11.0 torchvision==0.12.0 cudatoolkit=11.3 -c pytorch
 pip install -r requirements.txt  
 ```

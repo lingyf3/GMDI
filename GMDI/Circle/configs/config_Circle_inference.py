@@ -30,14 +30,14 @@ opt.d_loss_type = "DANN_loss_mean"  # "CIDA_loss" # "GRDA_loss" # "DANN_loss"
 
 # for warm up
 opt.init_lr = 1e-6
-opt.peak_lr_e = 1.5 * 1e-4
-opt.peak_lr_d = 1.5 * 1e-4
+opt.peak_lr_e = 1.1 * 1e-4
+opt.peak_lr_d = 1.1 * 1e-4
 opt.final_lr = 1e-8
 opt.warmup_steps = 40
 
 opt.seed = 2333
 opt.num_epoch = 1000
-opt.batch_size = 8
+opt.batch_size = 16
 
 opt.use_visdom = False  # True
 opt.visdom_port = 2000
@@ -45,11 +45,11 @@ opt.test_on_all_dmn = False
 tmp_time = localtime()
 opt.outf = "result_save/{}".format(strftime("%Y-%m-%d %H:%M:%S", tmp_time))
 
-opt.save_interval = 500
+opt.save_interval = 1000
 opt.test_interval = 20
 
-opt.device = "cuda:3"
-opt.gpu_device = "0, 1, 2, 3, 4, 5, 6"
+opt.device = "cuda:2"
+opt.gpu_device = "0, 1, 2, 3, 4, 5, 6"    
 opt.gamma = 100
 opt.theta1 = 0.9
 opt.weight_decay = 5e-4
@@ -64,4 +64,4 @@ opt.input_dim = 2  # the dimension of input data x
 opt.u_dim = 2  # the dimension of local domain index u
 opt.theta_dim = 2  # the dimension of global domain index theta
 opt.k = 2
-opt.alpha = 1  # concentration parameter
+opt.alpha = 1 #  concentration parameter

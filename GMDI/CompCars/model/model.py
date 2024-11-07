@@ -339,9 +339,7 @@ class BaseModel(nn.Module):
         ll_vk = torch.stack([x.view(-1).to(device=self.device) for x in vk_likelihood]) 
 
         # caculate the posterior of v
-        pos_v = torch.exp(ll_vk-loss_theta+loss_p_u_theta - torch.logsumexp(ll_vk-loss_theta+loss_p_u_theta, dim=0))    
-
-        # print("pos_v = {}".format(pos_v))
+        pos_v = torch.exp(ll_vk-loss_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain)+loss_p_u_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain) - torch.logsumexp(ll_vk-loss_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain)+loss_p_u_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain), dim=0)) 
 
         self.g_seq_list = torch.zeros_like(self.f_seq[0], device=self.device)
         for i in range(self.k):
@@ -490,18 +488,19 @@ class BaseModel(nn.Module):
         ll_vk = torch.stack([x.view(-1).to(device=self.device) for x in vk_likelihood])
 
         # calculate posterior of v
-        eta = torch.exp(ll_vk-loss_theta+loss_p_u_theta - torch.logsumexp(ll_vk-loss_theta+loss_p_u_theta, dim=0))
+        eta = torch.exp(ll_vk-loss_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain)+loss_p_u_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain) - torch.logsumexp(ll_vk-loss_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain)+loss_p_u_theta.mean(1).unsqueeze(1).expand(self.k, self.num_domain), dim=0))
+
         self.eta_pre = eta.detach()
 
-        loss_E_gan = torch.mean((eta.T[self.domain_mask == 0]).T * loss_E_gan, dim=1).sum(0)
-        loss_u_concentrate = torch.mean(eta * loss_u_concentrate, dim=1).sum(0)
+        loss_E_gan = torch.mean((eta.T[self.domain_mask == 0]).T * loss_E_gan.mean(1).view(-1, 1), dim=1).sum(0)
+        loss_u_concentrate = torch.mean(eta * loss_u_concentrate.mean(1).view(-1, 1), dim=1).sum(0)
         loss_p_x_u = torch.mean(eta.sum(0) * loss_p_x_u)
-        loss_p_u_theta = torch.mean(eta * loss_p_u_theta, dim=1).sum(0)
-        loss_theta = torch.mean(eta * loss_theta, dim=1).sum(0)
-        loss_p_y_z = torch.mean((eta.T[self.domain_mask == 1]).T *  loss_p_y_z, dim=1).sum(0)
+        loss_p_u_theta = torch.mean(eta * loss_p_u_theta.mean(1).view(-1, 1), dim=1).sum(0)
+        loss_theta = torch.mean(eta * loss_theta.mean(1).view(-1, 1), dim=1).sum(0)
+        loss_p_y_z = torch.mean((eta.T[self.domain_mask == 1]).T *  loss_p_y_z.mean(1).view(-1, 1), dim=1).sum(0)
         loss_q_u_x = torch.mean(eta.sum(0) * loss_q_u_x)
-        loss_q_z_x_u = torch.mean(eta *  loss_q_z_x_u, dim=1).sum(0)
-        loss_p_z_x_u = torch.mean(eta * loss_p_z_x_u, dim=1).sum(0)
+        loss_q_z_x_u = torch.mean(eta *  loss_q_z_x_u.mean(1).view(-1, 1), dim=1).sum(0)
+        loss_p_z_x_u = torch.mean(eta * loss_p_z_x_u.mean(1).view(-1, 1), dim=1).sum(0)
 
         self.loss_D = torch.sum(eta.mean(1) * self.loss_D)
         

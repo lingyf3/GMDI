@@ -31,8 +31,8 @@ opt.lambda_theta = 0.1
 
 # for warm up
 opt.init_lr = 3e-7
-opt.peak_lr_e = 1.7 * 1e-4
-opt.peak_lr_d = 1.7 * 1e-4
+opt.peak_lr_e = 9.4 * 1e-5
+opt.peak_lr_d = 9.4 * 1e-5
 opt.final_lr = 1e-8
 opt.warmup_steps = 40
 
@@ -46,10 +46,10 @@ opt.test_on_all_dmn = False
 tmp_time = localtime()
 opt.outf = "result_save/{}".format(strftime("%Y-%m-%d %H:%M:%S", tmp_time))
 
-opt.save_interval = 500
+opt.save_interval = 1000
 opt.test_interval = 10
 
-opt.device = "cuda:0"
+opt.device = "cuda:2"
 opt.gpu_device = "0, 1, 2, 3, 4, 5, 6"
 opt.gamma = 100
 opt.theta1 = 0.9

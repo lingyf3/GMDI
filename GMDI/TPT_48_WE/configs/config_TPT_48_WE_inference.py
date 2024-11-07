@@ -47,13 +47,13 @@ opt.lambda_theta = 0.6
 
 # for warm up
 opt.init_lr = 1e-6
-opt.peak_lr_e = 2.2 * 1e-5
-opt.peak_lr_d = 2.2 * 1e-5
+opt.peak_lr_e = 2.1 * 1e-5
+opt.peak_lr_d = 2.1 * 1e-5
 opt.final_lr = 1e-8
-opt.warmup_steps = 40
+opt.warmup_steps = 20
 
-opt.seed = 25
-opt.num_epoch = 500
+opt.seed = 2333
+opt.num_epoch = 600
 opt.batch_size = 16
 
 opt.use_visdom = False  # True
@@ -61,11 +61,11 @@ opt.visdom_port = 2000
 tmp_time = localtime()
 opt.outf = "result_save/{}".format(strftime("%Y-%m-%d %H:%M:%S", tmp_time))
 
-opt.save_interval = 500
+opt.save_interval = 600
 opt.test_interval = 20
 
-opt.device = "cuda:2"
-opt.gpu_device = "0, 1, 2, 3, 4, 5, 6"
+opt.device = "cuda:5"
+opt.gpu_device = "0, 1, 2, 3, 4, 5, 6, 7"
 opt.gamma = 100
 opt.theta1 = 0.9
 opt.weight_decay = 5e-4
